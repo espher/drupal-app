@@ -1,0 +1,61 @@
+#
+# earlier versions of Drupal are tracked in `community/PHP/`
+#
+# follows official upstream conventions:
+# https://www.drupal.org/docs/develop/using-composer
+
+# Ignore configuration files that may contain sensitive information
+/movie-app-drupal-9/web/sites/*/*settings*.php
+/movie-app-drupal-9/web/sites/*/*services*.yml
+
+# Ignore paths that may contain user-generated content
+/movie-app-drupal-9/web/sites/*/files
+/movie-app-drupal-9/web/sites/*/public
+/movie-app-drupal-9/web/sites/*/private
+/movie-app-drupal-9/web/sites/*/files-public
+/movie-app-drupal-9/web/sites/*/files-private
+
+# Ignore paths that may contain temporary files
+/movie-app-drupal-9/web/sites/*/translations
+/movie-app-drupal-9/web/sites/*/tmp
+/movie-app-drupal-9/web/sites/*/cache
+
+# Ignore drupal core (if not versioning drupal sources)
+/movie-app-drupal-9/web/vendor
+/movie-app-drupal-9/web/core
+/movie-app-drupal-9/web/modules/README.txt
+/movie-app-drupal-9/web/profiles/README.txt
+/movie-app-drupal-9/web/sites/development.services.yml
+/movie-app-drupal-9/web/sites/example.settings.local.php
+/movie-app-drupal-9/web/sites/example.sites.php
+/movie-app-drupal-9/web/sites/README.txt
+/movie-app-drupal-9/web/themes/README.txt
+/movie-app-drupal-9/web/.csslintrc
+/movie-app-drupal-9/web/.editorconfig
+/movie-app-drupal-9/web/.eslintignore
+/movie-app-drupal-9/web/.eslintrc.json
+/movie-app-drupal-9/web/.gitattributes
+/movie-app-drupal-9/web/.htaccess
+/movie-app-drupal-9/web/.ht.router.php
+/movie-app-drupal-9/web/autoload.php
+/movie-app-drupal-9/web/composer.json
+/movie-app-drupal-9/web/composer.lock
+/movie-app-drupal-9/web/example.gitignore
+/movie-app-drupal-9/web/index.php
+/movie-app-drupal-9/web/INSTALL.txt
+/movie-app-drupal-9/web/LICENSE.txt
+/movie-app-drupal-9/web/README.txt
+/movie-app-drupal-9/web/robots.txt
+/movie-app-drupal-9/web/update.php
+/movie-app-drupal-9/web/movie-app-drupal-9/web.config
+
+# Ignore vendor dependencies and scripts
+/movie-app-drupal-9/vendor
+/movie-app-drupal-9/composer.phar
+/movie-app-drupal-9/composer
+/movie-app-drupal-9/robo.phar
+/movie-app-drupal-9/robo
+/movie-app-drupal-9/drush.phar
+/movie-app-drupal-9/drush
+/movie-app-drupal-9/drupal.phar
+/movie-app-drupal-9/drupal
