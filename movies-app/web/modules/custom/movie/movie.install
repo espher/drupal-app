@@ -5,6 +5,110 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\user\EntityOwnerInterface;
 
 /**
+ * Implements hook_install().
+ */
+ function movie_install() {
+  $db = \Drupal::database();
+
+  $actors = [
+    [
+      'name' => 'Robert De Niro',
+      'biography' => 'One of the greatest actors of all time, Robert De Niro was born on August 17, 1943 in Manhattan, New York City, to artists Virginia (Admiral) and Robert De Niro Sr. His paternal grandfather was of Italian descent, and his other ancestry is Irish, English, Dutch, German',
+    ],
+    [
+      'name' => 'Jack Nicholson',
+      'biography' => 'Jack Nicholson, an American actor, producer, director and screenwriter, is a three-time Academy Award winner and twelve-time nominee. Nicholson is also notable for being one of two actors - the other being Michael Caine',
+    ],
+    [
+      'name' => 'Marlon Brando',
+      'biography' => 'Marlon Brando is widely considered the greatest movie actor of all time, rivaled only by the more theatrically oriented Laurence Olivier in terms of esteem. Unlike Olivier, who preferred the stage to the screen, Brando concentrated',
+    ],
+    [
+      'name' => 'Denzel Washington',
+      'biography' => 'Denzel Hayes Washington, Jr. was born on December 28, 1954 in Mount Vernon, New York. He is the middle of three children of a beautician mother, Lennis, from Georgia, and a Pentecostal minister father, Denzel Washington',
+    ],
+    [
+      'name' => 'Katharine Hepburn',
+      'biography' => 'Katharine Houghton Hepburn was born on May 12, 1907 in Hartford, Connecticut to a suffragist, Katharine Martha (Houghton), and a doctor, Thomas Norval Hepburn, who both always encouraged her to speak her mind',
+    ],
+    [
+      'name' => 'Humphrey Bogart',
+      'biography' => 'Humphrey DeForest Bogart was born in New York City, New York, to Maud Humphrey, a famed magazine illustrator and suffragette, and Belmont DeForest Bogart, a moderately wealthy surgeon (who was secretly addicted to opium)',
+    ],
+    [
+      'name' => 'Meryl Streep',
+      'biography' => 'Considered by many critics to be the greatest living actress, Meryl Streep has been nominated for the Academy Award an astonishing 21 times, and has won it three times. Meryl was born Mary Louise Streep in 1949 in Summit',
+    ]
+  ];
+
+  
+  $query = $db->insert('movie_actors')->fields( [ 'name','biography' ]);
+  foreach($actors as $value) {
+    $query->values($value);
+  }
+  $query->execute();
+
+
+  $movies = [
+    [
+      'uid' => 1,
+      'title' => 'Cape Fear',
+      'short_description' => 'A convicted rapist, released from prison after serving a fourteen-year sentence, stalks the family of the lawyer who originally defended him.',
+      'synopsis' => 'mprisoned for brutally assaulting a young girl, Max Cady spends his time in jail wisely - reading literature, sculpting his body to perfection and planning his violent revenge on the defence lawyer who put him behind bars. After serving his fourteen year sentence, Cady is released from prison and his rampage begin',
+      'actor_id' => 1
+    ],
+    [
+      'uid' => 2,
+      'title' => 'Chinatown',
+      'short_description' =>  'A private detective hired to expose an adulterer in 1930s Los Angeles finds himself caught up in a web of deceit, corruption, and murder.',
+      'synopsis' => 'In 1937 Los Angeles, private investigator Jake J.J. Gittes specializes in cheating-spouse cases. His current target is Hollis Mulwray, high-profile chief engineer for the Los Angeles Department of Water and Power, whose wife suspects him of infidelity.',
+      'actor_id' => 2
+    ],
+    [ 
+      'uid' => 3,
+      'title' => 'Apocalypse Now',
+      'short_description' => 'A U.S. Army officer serving in Vietnam is tasked with assassinating a renegade Special Forces Colonel who sees himself as a god.',
+      'synopsis' => 'It is the height of the war in Vietnam, and U.S. Army Captain Willard is sent by Colonel Lucas and a General to carry out a mission that, officially, does not exist - nor will it ever exist. The mission: To seek out a mysterious Green Beret Colonel, Walter Kurtz, whose army has crossed the border into Cambodia and is conducting hit-and-run missions against the Viet Cong and NVA',
+      'actor_id' => 3
+    ],
+    [ 
+      'uid' => 4,
+      'title' => 'Fences',
+      'short_description' => 'A working-class African-American father tries to raise his family in the 1950s, while coming to terms with the events of his life.',
+      'synopsis' => 'Troy Maxson makes his living as a sanitation worker in 1950s Pittsburgh. Maxson once dreamed of becoming a professional baseball player, but was deemed too old when the major leagues began admitting black athletes. Bitter over his missed opportunity',
+      'actor_id' => 4
+    ],
+    [ 
+      'uid' => 5,
+      'title' => 'The Lion in Winter',
+      'short_description' => '1183 A.D.: King Henry IIs three sons all want to inherit the throne, but he wont commit to a choice. When he allows his imprisoned wife Eleanor of Aquitaine out for a Christmas visit',
+      'synopsis' => "It's Christmas 1183, and King Henry II (Peter O'Toole) is planning to announce his successor to the throne. The jockeying for the crown, though, is complex. Henry has three sons and wants his boy Prince John (Nigel Terry) to take over. Henry's wife",
+      'actor_id' => 5
+    ],
+    [ 
+      'uid' => 6,
+      'title' => 'Casablanca',
+      'short_description' => 'A cynical expatriate American cafe owner struggles to decide whether or not to help his former lover and her fugitive husband escape the Nazis in French Morocco',
+      'synopsis' => "The story of Rick Blaine, a cynical world-weary ex-patriate who runs a nightclub in Casablanca, Morocco during the early stages of WWII. Despite the pressure he constantly receives from the local authorities, Rick's cafe has become a kind of haven for refugees seeking to obtain illicit letters that will help them escape to America. But when Ilsa",
+      'actor_id' => 6
+    ],
+    [ 
+      'uid' => 7,
+      'title' => 'Out of Africa',
+      'short_description' => 'In 20th-century colonial Kenya, a Danish baroness/plantation owner has a passionate love affair with a free-spirited big-game hunter',
+      'synopsis' => 'Follows the life of Karen Blixen, who establishes a plantation in Africa. Her life is complicated by a husband of convenience (Bror Blixen), a true love (Denys), troubles on the plantation, schooling of the natives, war, and catching VD from her husband',
+      'actor_id' => 7
+    ]
+  ];
+
+  $query = $db->insert('movie_movie')->fields( [ 'title','short_description','synopsis','actor_id' ]);
+  foreach($movies as $value) {
+    $query->values($value);
+  }
+  $query->execute();
+}
+
+/**
  * Implements hook_schema().
  */
 function movie_schema() {
