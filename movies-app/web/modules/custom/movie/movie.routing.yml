@@ -1,0 +1,68 @@
+movie.display_data:
+  path: /admin/movie/all
+  defaults:
+    _controller: Drupal\movie\Controller\MovieController::index
+    _title: "All Movies"
+  requirements:
+    _permission: "administer site configuration"
+
+movie.show_data:
+  path: /admin/movie/{id}/show
+  defaults:
+    _controller: Drupal\movie\Controller\MovieController::show
+    _title: "Show Movie"
+  requirements:
+    _permission: "administer site configuration"
+
+movie.add_form:
+  path: /admin/movie/add
+  defaults:
+    _form: Drupal\movie\Form\AddForm
+    _title: "Add Movie"
+  requirements:
+    _access: "TRUE"
+    _permission: "administer site configuration"
+
+movie.delete_form:
+  path: /admin/movie/{id}/delete
+  defaults:
+    _form: Drupal\movie\Form\DeleteForm
+    _title: "Delete Movie"
+  requirements:
+    _access: "TRUE"
+    _permission: "administer site configuration"
+
+
+movie.display_actor:
+  path: /admin/actor/all
+  defaults:
+    _controller: Drupal\movie\Controller\ActorController::index
+    _title: "All Aactors"
+  requirements:
+    _permission: "administer site configuration"
+
+movie.show_actor:
+  path: /admin/actor/{id}/show
+  defaults:
+    _controller: Drupal\movie\Controller\ActorController::show
+    _title: "Show Actor"
+  requirements:
+    _permission: "administer site configuration"
+
+movie.add_actor:
+  path: /admin/actor/add
+  defaults:
+    _form: Drupal\movie\Form\ActorAddForm
+    _title: "Add Actor"
+  requirements:
+    _access: "TRUE"
+    _permission: "administer site configuration"
+
+movie.delete_actor:
+  path: /admin/actor/{id}/delete
+  defaults:
+    _form: Drupal\movie\Form\ActorDeleteForm
+    _title: "Delete Actor"
+  requirements:
+    _access: "TRUE"
+    _permission: "administer site configuration"

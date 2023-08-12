@@ -1,0 +1,119 @@
+<?php
+
+use Drupal\Core\Entity\ContentEntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\user\EntityOwnerInterface;
+
+/**
+ * Implements hook_schema().
+ */
+function movie_schema() {
+  $schema = [];
+
+  // Movie entity table.
+  $schema['movie_movie'] = [
+    'description' => 'The base table for movie entities.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'The primary identifier for a movie entity.',
+      ],
+      'uid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The user ID of the movie author.',
+      ],
+      'title' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The title of the movie entity.',
+      ],
+      'short_description' => [
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => FALSE,
+        'description' => 'A short description of the movie.',
+      ],
+      'image' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'The image filename for the movie.',
+      ],
+      'description' => [
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => FALSE,
+        'description' => 'Full description of the movie.',
+      ],
+      'synopsis' => [
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => FALSE,
+        'description' => 'A brief synopsis of the movie.',
+      ],
+      'actor_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'The ID of the associated actor.',
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'uid' => ['uid'],
+      'actor_id' => ['actor_id'],
+    ],
+    'foreign keys' => [
+      'uid' => [
+        'table' => 'users',
+        'column' => ['uid' => 'uid'],
+      ],
+      'actor_id' => [
+        'table' => 'movie_actors',
+        'column' => ['actor_id' => 'id'],
+      ],
+    ],
+  ];
+
+  // Actors entity table.
+  $schema['movie_actors'] = [
+    'description' => 'The base table for actors entities.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'The primary identifier for an actor entity.',
+      ],
+      'name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The name of the actor.',
+      ],
+      'picture' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'The image filename for the actor.',
+      ],
+      'biography' => [
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => FALSE,
+        'description' => 'Biography of the actor.',
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  return $schema;
+}

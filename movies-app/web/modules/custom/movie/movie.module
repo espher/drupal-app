@@ -1,0 +1,83 @@
+<?php
+/**
+ * Implements hook_page_attachments().
+ */
+function movie_page_attachments(array &$attachments) {
+  if (\Drupal::service('router.admin_context')->isAdminRoute()) {
+    $attachments['#attached']['library'][] = 'movie/admin_styling';
+  }
+}
+
+
+/**
+ * Implements hook_toolbar().
+ */
+function movie_toolbar() {
+    $items = [];
+
+    $items['Movies App'] = [
+        '#cache' => [
+            'contexts' => ['user.permissions'],
+        ],
+    ];
+
+    if (!\Drupal::currentUser()->hasPermission('Access the Commande overview page')) {
+        return $items;
+    }
+
+    $items['Movies App'] += [
+        '#type' => 'toolbar_item',
+        '#weight' => 20,
+        'tab' => [
+            '#type' => 'link',
+            '#title' => 'Movies App',
+            '#url' => \Drupal\Core\Url::fromUri("internal:/admin/movie/commandes"),
+            '#attributes' => [
+                'title' => 'Movies menu',
+                'class' => [],
+            ],
+        ],
+        'tray' => [
+            'movie_menu' => [
+              '#type' => 'container',
+              '#id' => 'movie',
+              '#attributes' => [
+                'class' => ['toolbar-menu-movies'],
+              ],
+              'configuration' => 
+                [
+                    '#type' => 'link',
+                    '#title' => 'All Movies',
+                    '#url' => \Drupal\Core\Url::fromUri("internal:/admin/movie/all"),
+                    
+                ],
+                [
+                    '#type' => 'link',
+                    '#title' => 'Create Movies',
+                    '#url' => \Drupal\Core\Url::fromUri("internal:/admin/movie/add"),
+
+                ],
+                [
+                  '#type' => 'link',
+                  '#title' => 'All Actors',
+                  '#url' => \Drupal\Core\Url::fromUri("internal:/admin/actor/all"),
+
+                ],
+                [
+                  '#type' => 'link',
+                  '#title' => 'Create Actors',
+                  '#url' => \Drupal\Core\Url::fromUri("internal:/admin/actor/add"),
+
+                ],
+            ],
+            
+        ],
+        '#attached' => array(
+            'library' => array(
+                'movie/admin',
+            ),
+        ),
+
+    ];
+    return $items;
+}

@@ -1,0 +1,7 @@
+admin_styling:
+  version: 1
+  css:
+    theme:
+      css/admin-styles.css: {}
+  #js:
+  #  js/admin-script.js: {}

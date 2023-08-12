@@ -1,0 +1,7 @@
+name: movie
+description: 'Provides a movies an actors catalog.'
+
+type: module
+core_version_requirement: ^9
+
+package: custom
