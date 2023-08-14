@@ -32,7 +32,6 @@ movie.delete_form:
     _access: "TRUE"
     _permission: "administer site configuration"
 
-
 movie.display_actor:
   path: /admin/actor/all
   defaults:
@@ -66,3 +65,33 @@ movie.delete_actor:
   requirements:
     _access: "TRUE"
     _permission: "administer site configuration"
+
+movie.home_page:
+ path: '/movies'
+ defaults:
+   _controller: '\Drupal\movie\Controller\ListPageController::movies'
+   _title: 'MOVIES PAGE'
+ requirements:
+   _permission: 'access content'
+
+movie.page_details:
+ path: '/movies/{id}'
+ defaults:
+   _controller: '\Drupal\movie\Controller\MovieController::view'
+ requirements:
+   _permission: 'access content'
+
+movie.actor_details:
+ path: '/actors/{id}'
+ defaults:
+   _controller: '\Drupal\movie\Controller\ActorController::view'
+ requirements:
+   _permission: 'access content'
+
+movie.actors_list:
+ path: '/actors'
+ defaults:
+   _controller: '\Drupal\movie\Controller\ListPageController::actors'
+   _title: 'Actors PAGE'
+ requirements:
+   _permission: 'access content'

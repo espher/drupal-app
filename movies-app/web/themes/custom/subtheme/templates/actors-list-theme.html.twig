@@ -1,0 +1,17 @@
+<div class="movies-bc">
+  <ul>
+    <li><a href="{{base_url}}/actors">Actors List</a></li>
+    <li><a href="{{base_url}}/movies">Movies List</a></li>
+  </ul>
+</div>
+
+<h1>Actors List</h1>
+
+<h2>Actors:</h2>
+<div class="actors-list">
+  {% for item in links %}
+    <li>
+      <a href="{{base_url}}/actors/{{ item[0] }}">{{ item[1] }} </a>
+    </li>        
+  {% endfor %}
+</div>

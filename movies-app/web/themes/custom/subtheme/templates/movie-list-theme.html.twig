@@ -1,0 +1,10 @@
+<h1>Movies List</h1>
+
+<h2>Movies:</h2>
+<div class="movies-list">
+  {% for item in links %}
+    <li>
+      <a href="{{base_url}}/movies/{{ item[0] }}">{{ item[1] }} </a>
+    </li>        
+  {% endfor %}
+</div>

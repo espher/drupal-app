@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * @Contains Drupal\movie\Form\AddForm.
@@ -80,15 +79,7 @@ class AddForm extends FormBase {
             '#required' => TRUE,
             '#wrapper_attributes' => ['class' => 'col-md-6 col-12'],
         ];
-        /*
-        $form['description'] = [
-            '#type' => 'textarea',
-            '#title' => $this->t('Description'),
-            '#required' => true,
-            '#default_value' => (isset($data['description'])) ? $data['description'] : '',
-            '#wrapper_attributes' => ['class' => 'col-md-6 col-xs-12'],
-        ];
-        */
+
         $form['submit'] = [
             '#type' => 'submit',
             '#value' => $this->t('save'),
@@ -126,43 +117,20 @@ class AddForm extends FormBase {
         }
 
         if (isset($_GET['id'])) {
-            // update data in database
             \Drupal::database()->update('movie_movie')->fields($data)->condition('id', $_GET['id'])->execute();
         } else {
-            // Insert data to database.
             \Drupal::database()->insert('movie_movie')->fields($data)->execute();
         }
         if (!is_null($image[0])) {
-            // Save file as Permanent.
             $file = File::load($image[0]);
             $file->setPermanent();
             $file->save();
         }
 
-        // Show description and redirect to list page.
         \Drupal::messenger()->addStatus($this->t('Successfully saved'));
         $url = new Url('movie.display_data');
         $response = new RedirectResponse($url->toString());
         $response->send();
-    }
-
-    /**
-     * Get a list of actors.
-     *
-     * @return array
-     */
-    protected function getActors() {
-        $actors = [];
-        $query = \Drupal::database()->select('movie_actors', 'a')
-            ->fields('a', ['id', 'name'])
-            ->orderBy('name')
-            ->execute();
-
-        foreach ($query as $row) {
-            $actors[$row->id] = $row->name;
-        }
-
-        return $actors;
     }
 }
 

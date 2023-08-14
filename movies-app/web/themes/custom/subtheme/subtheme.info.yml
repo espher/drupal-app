@@ -1,0 +1,12 @@
+name: 'My Subtheme Movies'
+type: theme
+description: 'Subtheme for movies app.'
+core_version_requirement:  ^9
+base theme: olivero
+
+regions:
+  header: 'Header'
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  content: 'Content'
+  footer: 'Footer'

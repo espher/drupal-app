@@ -1,4 +1,7 @@
 <?php
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\search_api\Index\IndexInterface;
+
 /**
  * Implements hook_page_attachments().
  */
@@ -80,4 +83,69 @@ function movie_toolbar() {
 
     ];
     return $items;
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function movie_theme($existing, $type, $theme, $path) {
+  return [
+    'movies_list' => [
+      'render element' => 'children',
+      'template' => 'movie-list-theme',
+      'path' => $path . '/templates',
+      'variables' => [
+        'links'     => '',
+        'base_url'  => '',
+      ]
+    ],
+    'movie_single_theme' => [
+      'render element' => 'children',
+      'template' => 'movie-single-theme',
+      'path' => $path . '/templates',
+      'variables' => [
+          'title'     => '',
+          'synopsis'  => '',
+          'image'     => '',
+          'actors'    => [],
+          'base_url'  => '',
+      ],
+    ],
+    'actors_list' => [
+      'render element' => 'children',
+      'template' => 'actors-list-theme',
+      'path' => $path . '/templates',
+      'variables' => [
+        'links'     => '',
+        'base_url'  => '',
+      ]
+    ],
+    'actor_single_theme' => [
+      'render element' => 'children',
+      'template' => 'actors-single-theme',
+      'path' => $path . '/templates',
+      'variables' => [
+          'name'      => '',
+          'biography' => '',
+          'image'     => '',
+          'movies'    => [],
+          'base_url'  => '',
+      ],
+    ],
+  ];
+
+}
+
+
+/**
+ * Implements hook_cron().
+ */
+function movie_cron() {
+  $query = \Drupal::database()->select('movie_movie', 't')->fields('t', ['id', 'title']);
+  $results = $query->execute()->fetchAll();
+
+  foreach ($results as $result) {
+    IndexInterface::search_api_index_item_insert('movie_index', $result['id'], 'movie_movie', $result);
+  }  
 }

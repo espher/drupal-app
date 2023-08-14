@@ -1,21 +1,15 @@
 <?php
-
 /**
  * @file
  * @Contains Drupal\movie\Controller\ActorController.
  */
-
 namespace Drupal\movie\Controller;
-
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
 
-/**
- * Implement movie class operations.
- */
 class ActorController extends ControllerBase {
     public function index() {
         //create table header
@@ -28,7 +22,6 @@ class ActorController extends ControllerBase {
             'edit' => $this->t('Edit'),
         ];
 
-        // get data from database
         $query = \Drupal::database()->select('movie_actors', 'm');
         $query->fields('m', ['id', 'name', 'biography']);
         $results = $query->execute()->fetchAll();
@@ -41,7 +34,6 @@ class ActorController extends ControllerBase {
             $linkEdit = Link::fromTextAndUrl('Edit', $url_edit);
             $linkView = Link::fromTextAndUrl('View', $url_view);
 
-            //get data
             $rows[] = [
                 'id' => $data->id,
                 'name' => $data->name,
@@ -51,7 +43,7 @@ class ActorController extends ControllerBase {
                 'edit' =>  $linkEdit,
             ];
         }
-        // render table
+
         $form['table'] = [
             '#type' => 'table',
             '#header' => $header_table,
@@ -73,13 +65,55 @@ class ActorController extends ControllerBase {
         $biography = $data['biography'];
 
         $file = File::load($data['picture']);
-        $picture = $file->createFileUrl();
+        if(!empty($file)) {
+            $picture = $file->createFileUrl();
+        }
 
         return [
             '#type' => 'markup',
             '#markup' => "<h1>$name</h1><br>
                           <img src='$picture' width='100' height='100' /> <br>
                           <p>$biography</p>"
+        ];
+    }
+
+    public function view(int $id) { 
+        global $base_url;
+
+        $conn = Database::getConnection();
+        $query = $conn->select('movie_actors', 'm')
+                        ->condition('id', $id)
+                        ->fields('m');
+        $data = $query->execute()->fetchAssoc();
+
+        $name = $data['name'];
+        $biography = $data['biography'];
+
+        
+        $image = '';
+        $file = File::load($data['picture']);
+        if(!empty($file)) {
+            $image = $file->createFileUrl();
+        }
+    
+        $query = \Drupal::database()->select('movie_movie', 'm')
+                    ->fields('m', ['id', 'title'])
+                    ->condition('actor_id', $data['id']);
+        $data = $query->execute()->fetchAll();
+
+
+        $movies = [];
+        foreach ($data as $dat) {
+            $movies[] = [$dat->id, $dat->title];
+        }
+        
+        return [
+            '#theme' => 'actor_single_theme',
+            '#name' => $name,
+            '#biography' => $biography,
+            '#image' => $image,
+            '#movies' => $movies,
+            '#base_url' => $base_url,
         ];
     }
 }
